@@ -1,0 +1,6 @@
+base32-lib
+fastapi
+requests
+tenacity
+toolz
+uvicorn[standard]

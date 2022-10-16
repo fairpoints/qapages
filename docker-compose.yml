@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: "."
+    image: polyneme/qapages
+    volumes:
+      - ./src:/src
+      - ./tests:/tests
+    entrypoint:
+      - uvicorn
+      - qapages.entrypoints.fastapi_app:app
+      - --reload
+      - --host=0.0.0.0
+      - --port=8000
+    ports:
+      - "8000:8000"
