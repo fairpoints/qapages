@@ -11,3 +11,6 @@ update-deps:
 		requirements/dev.txt requirements/dev.in
 
 update: update-deps init
+
+up-dev:
+	docker-compose up --build --force-recreate --detach --remove-orphans
