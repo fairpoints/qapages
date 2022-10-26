@@ -2,6 +2,7 @@ base32-lib
 fastapi
 pydantic
 pydantic-schemaorg
+pymongo
 requests
 tenacity
 toolz

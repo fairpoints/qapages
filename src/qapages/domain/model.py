@@ -1,3 +1,4 @@
+import hashlib
 from typing import Union, List, TYPE_CHECKING
 
 from pydantic import Field, AnyUrl, HttpUrl
@@ -47,3 +48,7 @@ if TYPE_CHECKING:
     from pydantic_schemaorg.DefinedTerm import DefinedTerm
     from pydantic_schemaorg.URL import URL
     from pydantic_schemaorg.Integer import Integer
+
+
+def id_localpart_from_str(s: str):
+    return hashlib.sha256(s.encode(encoding="utf-8")).hexdigest()

@@ -1,11 +1,16 @@
+from qapages.adapters.repository import MongoQAPageRepository
+from qapages.config import get_mongo_db
 from qapages.domain.model import QAPage, Question, Answer
 
-qapages_init = [
+nums = iter(range(1_000_000))
+
+qapages_init = (
     QAPage(
         mainEntity=Question(
             name="What is Open Science?",
             text="What is Open Science?",
             answerCount=3,
+            suggestedAnswer=[],
             acceptedAnswer=[
                 Answer(
                     text=(
@@ -41,13 +46,14 @@ qapages_init = [
                     url="https://doi.org/10.1016/j.jbusres.2017.12.043",
                 ),
             ],
-        )
+        ),
     ),
     QAPage(
         mainEntity=Question(
             name="What are the main elements of Open Science?",
             text="What are the main elements of Open Science?",
             answerCount=2,
+            suggestedAnswer=[],
             acceptedAnswer=[
                 Answer(
                     text=(
@@ -67,13 +73,14 @@ qapages_init = [
                     url="https://unesdoc.unesco.org/ark:/48223/pf0000379949.locale=en",
                 ),
             ],
-        )
+        ),
     ),
     QAPage(
         mainEntity=Question(
             name="Does Open Science mean everything you do is open?",
             text="Does Open Science mean everything you do is open?",
             answerCount=2,
+            suggestedAnswer=[],
             acceptedAnswer=[
                 Answer(
                     text=(
@@ -97,6 +104,7 @@ qapages_init = [
             name="What is the difference between Open and FAIR?",
             text="What is the difference between Open and FAIR?",
             answerCount=2,
+            suggestedAnswer=[],
             acceptedAnswer=[
                 Answer(
                     text=(
@@ -128,6 +136,7 @@ qapages_init = [
             name="Where can I find FAIR data?",
             text="Where can I find FAIR data?",
             answerCount=2,
+            suggestedAnswer=[],
             acceptedAnswer=[
                 Answer(
                     text=(
@@ -171,4 +180,26 @@ qapages_init = [
     #         ],
     #     )
     # ),
-]
+)
+
+qapages = []
+
+for qapage in qapages_init:
+    qapage.id_ = f"https://fairpoints.org/QAPage/{next(nums)}"
+    qapage.mainEntity.id_ = f"https://fairpoints.org/Question/{next(nums)}"
+    for a in qapage.mainEntity.acceptedAnswer:
+        a.id_ = f"https://fairpoints.org/Answer/{next(nums)}"
+    for a in qapage.mainEntity.suggestedAnswer:
+        a.id_ = f"https://fairpoints.org/Answer/{next(nums)}"
+    qapages.append(qapage)
+
+
+def bootstrap():
+    mdb = get_mongo_db()
+    mdb.drop_collection("qapages")
+    mdb.drop_collection("questions")
+    qrepo = MongoQAPageRepository(mdb=mdb)
+    for qapage in qapages:
+        qrepo.add_qapage(qapage)
+
+    return qrepo

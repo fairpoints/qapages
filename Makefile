@@ -16,11 +16,13 @@ up-dev:
 	docker-compose up --build --force-recreate --detach --remove-orphans
 
 mongodump:
+	# export $(grep -v '^#' .env | xargs)
 	docker-compose exec mongo \
 		mongodump -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD) \
 		--gzip --archive > mongodump.gz
 
 mongorestore:
+	# export $(grep -v '^#' .env | xargs)
 	docker-compose exec -T mongo \
 		mongorestore -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD) \
 		--gzip --archive --drop < mongorestore.gz
