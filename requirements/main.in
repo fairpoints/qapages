@@ -1,5 +1,7 @@
 base32-lib
 fastapi
+pydantic
+pydantic-schemaorg
 requests
 tenacity
 toolz

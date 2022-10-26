@@ -14,3 +14,13 @@ update: update-deps init
 
 up-dev:
 	docker-compose up --build --force-recreate --detach --remove-orphans
+
+mongodump:
+	docker-compose exec mongo \
+		mongodump -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD) \
+		--gzip --archive > mongodump.gz
+
+mongorestore:
+	docker-compose exec -T mongo \
+		mongorestore -u $(MONGO_USERNAME) -p $(MONGO_PASSWORD) \
+		--gzip --archive --drop < mongorestore.gz
