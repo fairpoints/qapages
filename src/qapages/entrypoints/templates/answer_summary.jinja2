@@ -1,0 +1,13 @@
+<a href="/{{ answer.id_ }}"><div style="margin-top: 1em; border: solid;">
+    {{ answer.text }}
+    <br class="mb-4">
+    references:
+    <br class="mb-1">
+    <ul>
+        {% for u in answer.url %}
+            <li><a href="{{ u }}" style="color:blue;">{{ u }}</a></li>
+        {% else %}
+            <li>none provided</li>
+        {% endfor %}
+    </ul>
+</div></a>

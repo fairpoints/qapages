@@ -1,0 +1,17 @@
+{% extends 'base.jinja2' %}
+
+{% block schemaorg %}{{ qapage_json }}{% endblock %}
+
+{% block header %}
+ {% include 'answers_summary.jinja2' %}
+{% endblock %}
+
+{% block content %}
+  <div class="p-4">
+    {% for answer in answers %}
+        {% include 'answer_summary.jinja2' %}
+    {% else %}
+        No runs found.
+    {% endfor %}
+  </div>
+{% endblock %}

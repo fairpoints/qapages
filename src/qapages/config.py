@@ -13,3 +13,6 @@ def get_mongo_db() -> MongoDatabase:
         password=os.getenv("MONGO_PASSWORD"),
     )
     return _client["qapages"]
+
+
+HOST_URI_SCHEME_AUTHORITY = os.getenv("HOST_URI_SCHEME_AUTHORITY")

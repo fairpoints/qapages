@@ -1,5 +1,6 @@
 base32-lib
 fastapi
+jinja2
 pydantic
 pydantic-schemaorg
 pymongo

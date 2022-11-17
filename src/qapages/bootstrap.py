@@ -1,8 +1,16 @@
+import random
+
+from qapages.config import HOST_URI_SCHEME_AUTHORITY
 from qapages.adapters.repository import MongoQAPageRepository
 from qapages.config import get_mongo_db
 from qapages.domain.model import QAPage, Question, Answer
 
-nums = iter(range(1_000_000))
+random.seed("qapages")
+
+
+def seven_digit_str():
+    return f"{random.randint(1, 9_999_999):07}"
+
 
 qapages_init = (
     QAPage(
@@ -185,12 +193,12 @@ qapages_init = (
 qapages = []
 
 for qapage in qapages_init:
-    qapage.id_ = f"https://fairpoints.org/QAPage/{next(nums)}"
-    qapage.mainEntity.id_ = f"https://fairpoints.org/Question/{next(nums)}"
+    qapage.id_ = f"{HOST_URI_SCHEME_AUTHORITY}/QAPage/{seven_digit_str()}"
+    qapage.mainEntity.id_ = f"{HOST_URI_SCHEME_AUTHORITY}/Question/{seven_digit_str()}"
     for a in qapage.mainEntity.acceptedAnswer:
-        a.id_ = f"https://fairpoints.org/Answer/{next(nums)}"
+        a.id_ = f"{HOST_URI_SCHEME_AUTHORITY}/Answer/{seven_digit_str()}"
     for a in qapage.mainEntity.suggestedAnswer:
-        a.id_ = f"https://fairpoints.org/Answer/{next(nums)}"
+        a.id_ = f"{HOST_URI_SCHEME_AUTHORITY}/Answer/{seven_digit_str()}"
     qapages.append(qapage)
 
 

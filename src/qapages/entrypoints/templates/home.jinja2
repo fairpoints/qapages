@@ -1,0 +1,13 @@
+{% extends 'base.jinja2' %}
+
+{% block header %}
+ {% include 'qapages_summary.jinja2' %}
+{% endblock %}
+
+{% block content %}
+  <div class="p-4">
+    {% for qapage in qapages %}
+        {% include 'qapage_summary.jinja2' %}
+    {% endfor %}
+  </div>
+{% endblock %}
